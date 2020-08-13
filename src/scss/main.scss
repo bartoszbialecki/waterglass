@@ -1,12 +1,36 @@
 @import "~normalize.css";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;400;700&display=swap");
 
 @import "_variables";
 
 body {
+  align-items: center;
   background: $backgroundColor;
   color: #fff;
   display: flex;
-  align-items: center;
+  font-family: "Roboto", Helvetica, Verdana, sans-serif;
   justify-content: center;
   min-height: 100vh;
+}
+
+.app {
+  &__heading {
+    font-size: 55px;
+    font-weight: 700;
+    letter-spacing: 10px;
+    line-height: 64px;
+    margin: 0 0 50px 0;
+    text-align: center;
+  }
+}
+
+.glass {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+
+  &__counter {
+    font-size: 100px;
+    position: absolute;
+  }
 }
