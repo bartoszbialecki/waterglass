@@ -1,0 +1,12 @@
+@import "~normalize.css";
+
+@import "_variables";
+
+body {
+  background: $backgroundColor;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
