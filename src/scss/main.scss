@@ -4,12 +4,29 @@
 @import "_variables";
 @import "./modules/app";
 
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
 body {
   align-items: center;
   background: $backgroundColor;
-  color: #fff;
+  color: $primaryColor;
   display: flex;
   font-family: "Roboto", Helvetica, Verdana, sans-serif;
   justify-content: center;
   min-height: 100vh;
+}
+
+.sr-only {
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
 }

@@ -18,4 +18,40 @@
     font-size: 100px;
     position: absolute;
   }
+
+  &__button {
+    background: none;
+    border: none;
+    cursor: pointer;
+
+    &:focus {
+      outline: 2px dashed $secondaryColor;
+    }
+
+    &:hover {
+      svg {
+        transform: scale(1.1);
+      }
+    }
+
+    svg {
+      fill: $primaryColor;
+      height: 80px;
+      outline: none;
+      transition: transform 0.3s linear, fill 0.2s linear;
+      width: 80px;
+
+      &:hover {
+        fill: $secondaryColor;
+      }
+    }
+
+    &--remove {
+      margin-right: 20px;
+    }
+
+    &--add {
+      margin-left: 20px;
+    }
+  }
 }
