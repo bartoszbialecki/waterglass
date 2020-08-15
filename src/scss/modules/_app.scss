@@ -1,4 +1,8 @@
 .app {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 40px;
+
   &__heading {
     font-size: 55px;
     font-weight: 700;
@@ -11,6 +15,7 @@
   &__info {
     font-size: 24px;
     margin: 0 0 30px 0;
+    text-align: center;
   }
 }
 
