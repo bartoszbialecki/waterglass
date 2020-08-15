@@ -12,23 +12,33 @@ const removeGlassButton = document.querySelector(REMOVE_GLASS_BUTTON_SELECTOR);
 const addGlassButton = document.querySelector(ADD_GLASS_BUTTON_SELECTOR);
 const glassCounter = document.querySelector(GLASS_COUNTER_SELECTOR);
 
-let numberOfGlasses = 0;
+const storageKey = new Date().toISOString().slice(0, 10);
+
+let numberOfGlasses = localStorage.getItem(storageKey) || 0;
 
 const updateGlassCounter = () => {
   glassCounter.innerHTML = numberOfGlasses;
+};
+
+const updateSotrage = () => {
+  localStorage.setItem(storageKey, numberOfGlasses);
 };
 
 const handleRemoveGlass = () => {
   if (numberOfGlasses > 0) {
     numberOfGlasses--;
     updateGlassCounter();
+    updateSotrage();
   }
 };
 
 const handleAddGlass = () => {
   numberOfGlasses++;
   updateGlassCounter();
+  updateSotrage();
 };
 
 removeGlassButton.addEventListener("click", handleRemoveGlass);
 addGlassButton.addEventListener("click", handleAddGlass);
+
+updateGlassCounter();
