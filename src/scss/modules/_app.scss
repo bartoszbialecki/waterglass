@@ -28,6 +28,10 @@
   &__counter {
     font-size: 100px;
     position: absolute;
+
+    &--animated {
+      animation: fadeIn 0.5s;
+    }
   }
 
   &__button {
