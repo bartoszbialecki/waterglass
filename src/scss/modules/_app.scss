@@ -46,7 +46,20 @@
 .glass {
   align-items: center;
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  position: relative;
+
+  @media (min-width: $tabletBrakepoint) {
+    flex-direction: row;
+  }
+
+  &__image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+  }
 
   &__button {
     background: none;
@@ -77,10 +90,22 @@
 
     &--remove {
       margin-right: 20px;
+
+      @media (min-width: $tabletBrakepoint) {
+        position: absolute;
+        left: 50%;
+        transform: translate(-240%, -50%);
+      }
     }
 
     &--add {
       margin-left: 20px;
+
+      @media (min-width: $tabletBrakepoint) {
+        position: absolute;
+        right: 50%;
+        transform: translate(240%, -50%);
+      }
     }
   }
 
