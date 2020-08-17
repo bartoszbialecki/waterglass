@@ -17,3 +17,20 @@
     transform: scale(var(--waterEndScaleX, 0.8), var(--waterEndScaleY, 1));
   }
 }
+
+@keyframes goalAchieved {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1);
+  }
+  75% {
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

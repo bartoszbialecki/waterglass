@@ -5,6 +5,8 @@ import { registerSW } from "./pwa.js";
 registerSW();
 
 const INFO_GOAL_SELECTOR = ".app__goal";
+const GOAL_ACHIEVED_SELECTOR = ".app__goal--achieved";
+const GOAL_ACHIEVED_ANIMATION_CLASS = "app__goal--achieved--animated";
 const REMOVE_GLASS_BUTTON_SELECTOR = ".glass__remove-button--js";
 const ADD_GLASS_BUTTON_SELECTOR = ".glass__add-button--js";
 const GLASS_COUNTER_SELECTOR = ".glass__counter--js";
@@ -14,6 +16,7 @@ const GLASS_WATER_SELECTOR = ".glass__water--js";
 const GLASS_WATER_ANIMATION_CLASS = "glass__water--animated";
 
 const infoGoal = document.querySelector(INFO_GOAL_SELECTOR);
+const goalAchieved = document.querySelector(GOAL_ACHIEVED_SELECTOR);
 const removeGlassButton = document.querySelector(REMOVE_GLASS_BUTTON_SELECTOR);
 const addGlassButton = document.querySelector(ADD_GLASS_BUTTON_SELECTOR);
 const glassCounter = document.querySelector(GLASS_COUNTER_SELECTOR);
@@ -38,12 +41,17 @@ const updateGlassCounter = () => {
 
   glassCounter.innerHTML = numberOfGlasses;
 
+  goalAchieved.classList.remove(GOAL_ACHIEVED_ANIMATION_CLASS);
   glassCounter.classList.remove(GLASS_COUNTER_DARK_CLASS);
   glassCounter.classList.remove(GLASS_COUNTER_ANIMATION_CLASS);
   glassWater.classList.remove(GLASS_WATER_ANIMATION_CLASS);
   // trigger reflow (without it, the animation won't work)
   void glassCounter.offsetWidth;
   glassCounter.classList.add(GLASS_COUNTER_ANIMATION_CLASS);
+
+  if (numberOfGlasses === goalInGlasses) {
+    goalAchieved.classList.add(GOAL_ACHIEVED_ANIMATION_CLASS);
+  }
 
   const glassesInPercent = numberOfGlasses / goalInGlasses;
 

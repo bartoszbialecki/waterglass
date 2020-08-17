@@ -7,6 +7,27 @@
   &__goal {
     color: $secondaryColor;
     font-size: 44px;
+
+    &--achieved {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: -48px;
+      opacity: 0;
+
+      &--animated {
+        animation: goalAchieved 0.5s ease-in-out forwards;
+      }
+
+      p {
+        margin-top: 10px;
+      }
+
+      svg {
+        fill: $secondaryColor;
+      }
+    }
   }
 
   &__heading {
