@@ -10,14 +10,18 @@
 
     &--achieved {
       align-items: center;
-      display: flex;
+      display: none;
       flex-direction: column;
       justify-content: center;
-      margin-top: -48px;
       opacity: 0;
+
+      @media (min-width: $tabletBrakepoint) {
+        margin-top: -48px;
+      }
 
       &--animated {
         animation: goalAchieved 0.5s ease-in-out forwards;
+        display: flex;
       }
 
       p {
