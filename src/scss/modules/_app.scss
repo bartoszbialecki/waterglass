@@ -25,15 +25,6 @@
   display: flex;
   justify-content: center;
 
-  &__counter {
-    font-size: 100px;
-    position: absolute;
-
-    &--animated {
-      animation: fadeIn 0.5s;
-    }
-  }
-
   &__button {
     background: none;
     border: none;
@@ -67,6 +58,27 @@
 
     &--add {
       margin-left: 20px;
+    }
+  }
+
+  &__counter {
+    font-size: 100px;
+    position: absolute;
+
+    &--animated {
+      animation: fadeIn 0.5s;
+    }
+
+    &--dark {
+      color: #000;
+    }
+  }
+
+  &__water {
+    transform-origin: center 95%;
+
+    &--animated {
+      animation: water 0.5s ease forwards;
     }
   }
 }
