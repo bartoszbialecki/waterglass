@@ -55,6 +55,14 @@
     transform: translateX(100%);
     width: 20%;
     z-index: 1;
+
+    &--open {
+      animation: slide-in 0.5s ease forwards;
+    }
+
+    &--closed {
+      animation: slide-out 0.5s ease forwards;
+    }
   }
 
   &__main-content {

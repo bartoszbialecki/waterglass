@@ -47,7 +47,7 @@
       }
 
       &--animated {
-        animation: goalAchieved 0.5s ease-in-out forwards;
+        animation: goal-achieved 0.5s ease-in-out forwards;
         display: flex;
       }
 
@@ -172,7 +172,7 @@
     position: absolute;
 
     &--animated {
-      animation: fadeIn 0.5s;
+      animation: fade-in 0.5s;
     }
 
     &--dark {

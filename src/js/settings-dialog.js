@@ -3,6 +3,8 @@ const DIALOG_SELECTOR = ".dialog";
 const DIALOG_CONTENT_SELECTOR = ".dialog__content";
 const OPEN_SETTINGS_DIALOG_SELECTOR = ".header__settings-button";
 const DIALOG_OVERLAY_SELECTOR = ".dialog__overlay";
+const DIALOG_CLOSE_CLASS = "dialog__content--closed";
+const DIALOG_OPEN_CLASS = "dialog__content--open";
 
 const openSettingsDialogButton = document.querySelector(
   OPEN_SETTINGS_DIALOG_SELECTOR
@@ -12,7 +14,8 @@ const dialog = document.querySelector(DIALOG_SELECTOR);
 const dialogContent = document.querySelector(DIALOG_CONTENT_SELECTOR);
 
 const closeDialog = () => {
-  dialogContent.style.cssText = "animation: slide-out .5s ease forwards;";
+  dialogContent.classList.remove(DIALOG_OPEN_CLASS);
+  dialogContent.classList.add(DIALOG_CLOSE_CLASS);
 
   setTimeout(() => {
     dialog.style.display = "none";
@@ -21,7 +24,8 @@ const closeDialog = () => {
 
 openSettingsDialogButton.addEventListener("click", () => {
   dialog.style.display = "block";
-  dialogContent.style.cssText = "animation: slide-in .5s ease forwards";
+  dialogContent.classList.remove(DIALOG_CLOSE_CLASS);
+  dialogContent.classList.add(DIALOG_OPEN_CLASS);
 });
 
 closeDialogButton.addEventListener("click", () => {
