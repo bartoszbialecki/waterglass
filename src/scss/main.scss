@@ -3,6 +3,8 @@
 
 @import "_variables";
 @import "_animations";
+@import "_modal";
+@import "_form";
 @import "./modules/app";
 
 html {
@@ -16,12 +18,9 @@ html {
 }
 
 body {
-  align-items: center;
   background: $backgroundColor;
   color: $primaryColor;
-  display: flex;
   font-family: "Roboto", Helvetica, Verdana, sans-serif;
-  justify-content: center;
   min-height: 100vh;
 }
 

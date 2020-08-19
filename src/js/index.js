@@ -14,6 +14,9 @@ const GLASS_COUNTER_ANIMATION_CLASS = "glass__counter--animated";
 const GLASS_COUNTER_DARK_CLASS = "glass__counter--dark";
 const GLASS_WATER_SELECTOR = ".glass__water--js";
 const GLASS_WATER_ANIMATION_CLASS = "glass__water--animated";
+const GLASS_CAPACITY_INFO_SELECTOR = ".glass__capacity--js";
+const SETTINGS_GLASS_CAPACITY_SELECTOR = ".glass-capacity--js";
+const SETTINGS_GOAL_SELECTOR = ".select-goal--js";
 
 const infoGoal = document.querySelector(INFO_GOAL_SELECTOR);
 const goalAchieved = document.querySelector(GOAL_ACHIEVED_SELECTOR);
@@ -21,14 +24,72 @@ const removeGlassButton = document.querySelector(REMOVE_GLASS_BUTTON_SELECTOR);
 const addGlassButton = document.querySelector(ADD_GLASS_BUTTON_SELECTOR);
 const glassCounter = document.querySelector(GLASS_COUNTER_SELECTOR);
 const glassWater = document.querySelector(GLASS_WATER_SELECTOR);
+const glassCapacityInfo = document.querySelector(GLASS_CAPACITY_INFO_SELECTOR);
+const glassCapacitySelect = document.querySelector(
+  SETTINGS_GLASS_CAPACITY_SELECTOR
+);
+const goalSelect = document.querySelector(SETTINGS_GOAL_SELECTOR);
 
 const storageKey = new Date().toISOString().slice(0, 10);
+const glassCapacityStorageKey = "glassCapacity";
+const goalStorageKey = "goal";
 
-let goal = 1.5; // in litres
-let glassCapacity = 0.25; // in litres
-let goalInGlasses = goal / glassCapacity;
+const readDataFromStorage = () => {
+  let goal = parseFloat(localStorage.getItem(goalStorageKey)) || 1.5; // in litres
+  let glassCapacity =
+    parseFloat(localStorage.getItem(glassCapacityStorageKey)) || 0.25; // in litres
+  let goalInGlasses = parseFloat(goal / glassCapacity);
+  let numberOfGlasses = parseInt(localStorage.getItem(storageKey), 10) || 0;
 
-let numberOfGlasses = localStorage.getItem(storageKey) || 0;
+  return [goal, glassCapacity, goalInGlasses, numberOfGlasses];
+};
+
+let [
+  goal,
+  glassCapacity,
+  goalInGlasses,
+  numberOfGlasses,
+] = readDataFromStorage();
+
+const selectGlassCapacity = () => {
+  const capacityOption = glassCapacitySelect.querySelector(
+    "[value='" + glassCapacity + "'"
+  );
+
+  if (capacityOption) {
+    capacityOption.selected = true;
+  }
+};
+
+const fillGoalSelect = () => {
+  const maxGoal = 5;
+  const standardGlassCapacity = 0.25;
+  let count = 1;
+  let capacity = 0;
+
+  do {
+    capacity = count * standardGlassCapacity;
+    let option = document.createElement("option");
+    option.value = capacity;
+    option.text = `${capacity} l`;
+    goalSelect.add(option);
+    count++;
+  } while (capacity < maxGoal);
+};
+
+const selectGoal = () => {
+  const goalOption = goalSelect.querySelector("[value='" + goal + "'");
+
+  if (goalOption) {
+    goalOption.selected = true;
+  }
+};
+
+const setupSettingsDialog = () => {
+  selectGlassCapacity();
+  fillGoalSelect();
+  selectGoal();
+};
 
 const updateGlassCounter = () => {
   const waterStartScaleXVariable = "--waterStartScaleX";
@@ -49,7 +110,7 @@ const updateGlassCounter = () => {
   void glassCounter.offsetWidth;
   glassCounter.classList.add(GLASS_COUNTER_ANIMATION_CLASS);
 
-  if (numberOfGlasses === goalInGlasses) {
+  if (numberOfGlasses >= goalInGlasses) {
     goalAchieved.classList.add(GOAL_ACHIEVED_ANIMATION_CLASS);
   }
 
@@ -126,12 +187,41 @@ const handleAddGlass = () => {
 };
 
 const updateInfoGoal = () => {
-  infoGoal.innerHTML = `${goalInGlasses}`;
+  infoGoal.innerHTML = `${parseFloat(goalInGlasses.toFixed(2)).toString()}`;
 };
 
+const updateGlassCapacityInfo = () => {
+  glassCapacityInfo.innerHTML = `${glassCapacity * 1000} ml`;
+};
+
+const handleChangeGlassCapacity = () => {
+  const selectedValue =
+    glassCapacitySelect.options[glassCapacitySelect.selectedIndex].value;
+  localStorage.setItem(glassCapacityStorageKey, selectedValue);
+
+  [goal, glassCapacity, goalInGlasses, numberOfGlasses] = readDataFromStorage();
+
+  updateGlassCapacityInfo();
+  updateInfoGoal();
+};
+
+const handleChangeGoal = () => {
+  const selectedValue = goalSelect.options[goalSelect.selectedIndex].value;
+  localStorage.setItem(goalStorageKey, selectedValue);
+
+  [goal, glassCapacity, goalInGlasses, numberOfGlasses] = readDataFromStorage();
+
+  updateInfoGoal();
+  goalAchieved.classList.remove(GOAL_ACHIEVED_ANIMATION_CLASS);
+};
+
+setupSettingsDialog();
 updateInfoGoal();
+updateGlassCapacityInfo();
+updateGlassCounter();
 
 removeGlassButton.addEventListener("click", handleRemoveGlass);
 addGlassButton.addEventListener("click", handleAddGlass);
 
-updateGlassCounter();
+glassCapacitySelect.addEventListener("change", handleChangeGlassCapacity);
+goalSelect.addEventListener("change", handleChangeGoal);

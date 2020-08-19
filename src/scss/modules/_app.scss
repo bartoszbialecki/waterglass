@@ -1,3 +1,30 @@
+.header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+
+  &__settings-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    fill: $primaryColor;
+
+    &:focus {
+      outline: 2px dashed $secondaryColor;
+    }
+
+    svg {
+      height: 32px;
+      outline: none;
+      width: 32px;
+
+      &:hover {
+        fill: $secondaryColor;
+      }
+    }
+  }
+}
+
 .app {
   margin: 0 auto;
   max-width: 1200px;
@@ -16,7 +43,7 @@
       opacity: 0;
 
       @media (min-width: $tabletBrakepoint) {
-        margin-top: -48px;
+        margin-top: -80px;
       }
 
       &--animated {
@@ -132,6 +159,11 @@
         transform: translate(240%, -50%);
       }
     }
+  }
+
+  &__capacity {
+    bottom: -15px;
+    position: absolute;
   }
 
   &__counter {

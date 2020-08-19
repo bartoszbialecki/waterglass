@@ -1,0 +1,93 @@
+.dialog {
+  display: none;
+  height: 100vh;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  &__close-button {
+    color: $primaryColor;
+    cursor: pointer;
+    display: inline-block;
+    height: 32px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    transition: color 0.5s ease;
+    width: 32px;
+
+    &::after {
+      border-left: 3px solid $primaryColor;
+      content: "";
+      height: 32px;
+      left: 16px;
+      position: absolute;
+      transform: rotate(45deg);
+    }
+
+    &::before {
+      border-left: 3px solid $primaryColor;
+      content: "";
+      height: 32px;
+      left: 16px;
+      position: absolute;
+      transform: rotate(-45deg);
+    }
+
+    &:hover {
+      &::after {
+        border-left-color: $secondaryColor;
+      }
+
+      &::before {
+        border-left-color: $secondaryColor;
+      }
+    }
+  }
+
+  &__content {
+    background: $dialogBackgroundColor;
+    height: 100vh;
+    min-width: 300px;
+    position: absolute;
+    right: 0;
+    transform: translateX(100%);
+    width: 20%;
+    z-index: 1;
+  }
+
+  &__main-content {
+    font-size: 18px;
+    padding: 30px 20px;
+  }
+
+  &__overlay {
+    background-color: rgba(0, 0, 0, 0.575);
+    height: 100vh;
+    position: absolute;
+    width: 100%;
+  }
+
+  &__title {
+    font-size: 24px;
+  }
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

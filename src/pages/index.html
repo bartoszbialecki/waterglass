@@ -160,11 +160,31 @@
     />
   </head>
   <body>
+    <header class="header">
+      <button class="header__settings-button">
+        <svg
+          width="60px"
+          height="60px"
+          viewBox="0 0 60 60"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:xlink="http://www.w3.org/1999/xlink"
+        >
+          <path
+            d="M30,40 C24.486,40 20,35.514 20,30 C20,24.486 24.486,20 30,20 C35.514,20 40,24.486 40,30 C40,35.514 35.514,40 30,40 M59,24 L51.583,24 C51.093,22.265 50.384,20.538 49.534,19.012 L54.779,13.767 C54.967,13.579 55.072,13.325 55.072,13.06 C55.072,12.794 54.967,12.54 54.779,12.353 L47.646,5.221 C47.255,4.83 46.622,4.83 46.231,5.221 L40.98,10.47 C39.399,9.619 37.327,8.809 36,8.413 L36,1 C36,0.447 35.552,0 35,0 L25,0 C24.448,0 24,0.447 24,1 L24,8.418 C22.646,8.82 20.612,9.607 19.018,10.47 L13.767,5.221 C13.376,4.83 12.743,4.83 12.353,5.221 L5.219,12.353 C4.829,12.743 4.829,13.376 5.219,13.767 L10.47,19.02 C9.628,20.588 8.845,22.628 8.426,24 L1,24 C0.448,24 0,24.447 0,25 L0,33 C0,33.553 0.448,34 1,34 L8.324,34 C8.757,36.603 9.555,39.187 10.476,40.976 L5.218,46.233 C5.03,46.421 4.925,46.675 4.925,46.94 C4.925,47.206 5.03,47.46 5.218,47.648 L12.353,54.779 C12.729,55.156 13.393,55.154 13.767,54.779 L19.024,49.519 C20.174,50.106 21.569,50.596 22.73,51.004 C23.198,51.169 23.65,51.328 24,51.464 L24,59 C24,59.553 24.448,60 25,60 L35,60 C35.552,60 36,59.553 36,59 L36,51.464 C36.35,51.327 36.804,51.168 37.273,51.003 C38.432,50.596 39.825,50.106 40.973,49.523 L46.233,54.779 C46.624,55.17 47.257,55.17 47.647,54.779 L54.779,47.648 C55.17,47.257 55.17,46.624 54.779,46.233 L49.545,40.997 C50.468,39.453 51.213,37.911 51.705,34 L59,34 C59.552,34 60,33.553 60,33 L60,25 C60,24.447 59.552,24 59,24"
+            id="Fill-672"
+          ></path>
+        </svg>
+
+        <span class="sr-only">Click to show settings dialog.</span>
+      </button>
+    </header>
+
     <main class="app">
       <h1 class="app__heading">WaterGlass</h1>
 
       <p class="app__tip">
-        You should drink at least 1.5 l of water per day to be healthy.
+        You should drink at least 1.5 litres of water per day to be healthy.
       </p>
 
       <section class="app__info">
@@ -210,6 +230,7 @@
           </svg>
 
           <span class="glass__counter glass__counter--js">0</span>
+          <p class="glass__capacity glass__capacity--js">250 ml</p>
         </div>
 
         <div>
@@ -258,5 +279,44 @@
         </div>
       </section>
     </main>
+
+    <div class="dialog" tabindex="-1" role="dialog">
+      <div class="dialog__overlay"></div>
+      <div class="dialog__content">
+        <span
+          class="dialog__close-button"
+          aria-label="Close settings dialog."
+        ></span>
+
+        <div class="dialog__main-content">
+          <h4 class="dialog__title">Settings</h4>
+
+          <form class="settings-form" action="">
+            <p>
+              <label>Set your goal (in litres):</label>
+              <select class="settings-form__goal select-goal--js"></select>
+            </p>
+
+            <p>
+              <label>Glass capacity (in millilitres):</label>
+              <select class="settings-form__glass glass-capacity--js">
+                <option value="0.2">200 ml</option>
+                <option value="0.24">240 ml</option>
+                <option value="0.25">250 ml</option>
+                <option value="0.26">260 ml</option>
+                <option value="0.27">270 ml</option>
+                <option value="0.3">300 ml</option>
+                <option value="0.32">320 ml</option>
+                <option value="0.325">325 ml</option>
+                <option value="0.35">350 ml</option>
+                <option value="0.4">400 ml</option>
+                <option value="0.45">450 ml</option>
+                <option value="0.5">500 ml</option>
+              </select>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
