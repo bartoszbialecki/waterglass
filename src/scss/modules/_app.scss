@@ -107,10 +107,11 @@
   }
 
   &__image-container {
+    align-items: center;
     display: flex;
     justify-content: center;
-    align-items: center;
     margin-bottom: 30px;
+    position: relative;
   }
 
   &__button {
@@ -162,7 +163,7 @@
   }
 
   &__capacity {
-    bottom: -15px;
+    bottom: -45px;
     position: absolute;
   }
 
