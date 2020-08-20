@@ -2,8 +2,10 @@
   display: flex;
   justify-content: flex-end;
   padding: 20px;
+}
 
-  &__settings-button {
+.nav {
+  &__button {
     background: none;
     border: none;
     cursor: pointer;

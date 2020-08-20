@@ -4,7 +4,9 @@ const CopyWebpackPlugin = require("copy-webpack-plugin");
 module.exports = {
   entry: {
     index: "./src/js/index.js",
+    dialog: "./src/js/dialog.js",
     settingsDialog: "./src/js/settings-dialog.js",
+    history: "./src/js/history.js",
   },
   output: {
     filename: "[name].[hash:8].js",
@@ -75,7 +77,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./src/pages/index.html",
       inject: true,
-      chunks: ["index", "settingsDialog"],
+      chunks: ["index", "dialog", "settingsDialog", "history"],
       filename: "index.html",
     }),
   ],
