@@ -18,6 +18,7 @@ const GLASS_CAPACITY_INFO_SELECTOR = ".glass__capacity--js";
 const SETTINGS_GLASS_CAPACITY_SELECTOR = ".glass-capacity--js";
 const SETTINGS_GOAL_SELECTOR = ".select-goal--js";
 
+const DB_STORAGE_KEY = "glassesDB";
 const GLASS_CAPACITY_STORAGE_KEY = "glassCapacity";
 const GOAL_STORAGE_KEY = "goal";
 
@@ -33,24 +34,31 @@ const glassCapacitySelect = document.querySelector(
 );
 const goalSelect = document.querySelector(SETTINGS_GOAL_SELECTOR);
 
-const storageKey = new Date().toISOString().slice(0, 10);
+const currentDate = new Date().toISOString().slice(0, 10);
+
+const findIndexOfPresentGlassesInDB = () => {
+  return db.findIndex((item) => item.date === currentDate);
+};
 
 const readDataFromStorage = () => {
+  let db = JSON.parse(localStorage.getItem(DB_STORAGE_KEY)) || [];
   let goal = parseFloat(localStorage.getItem(GOAL_STORAGE_KEY)) || 1.5; // in litres
   let glassCapacity =
     parseFloat(localStorage.getItem(GLASS_CAPACITY_STORAGE_KEY)) || 0.25; // in litres
   let goalInGlasses = parseFloat(goal / glassCapacity);
-  let numberOfGlasses = parseInt(localStorage.getItem(storageKey), 10) || 0;
 
-  return [goal, glassCapacity, goalInGlasses, numberOfGlasses];
+  return [db, goal, glassCapacity, goalInGlasses];
 };
 
-let [
-  goal,
-  glassCapacity,
-  goalInGlasses,
-  numberOfGlasses,
-] = readDataFromStorage();
+let [db, goal, glassCapacity, goalInGlasses] = readDataFromStorage();
+
+let numberOfGlasses = 0;
+
+const index = findIndexOfPresentGlassesInDB();
+
+if (index > -1) {
+  numberOfGlasses = db[index].glasses;
+}
 
 const selectGlassCapacity = () => {
   const capacityOption = glassCapacitySelect.querySelector(
@@ -170,7 +178,18 @@ const updateGlassCounter = () => {
 };
 
 const updateSotrage = () => {
-  localStorage.setItem(storageKey, numberOfGlasses);
+  const index = findIndexOfPresentGlassesInDB();
+
+  if (index === -1) {
+    db.push({
+      date: currentDate,
+      glasses: numberOfGlasses,
+    });
+  } else {
+    db[index].glasses = numberOfGlasses;
+  }
+
+  localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(db));
 };
 
 const handleRemoveGlass = () => {
