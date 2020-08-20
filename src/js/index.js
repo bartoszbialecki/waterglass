@@ -18,6 +18,9 @@ const GLASS_CAPACITY_INFO_SELECTOR = ".glass__capacity--js";
 const SETTINGS_GLASS_CAPACITY_SELECTOR = ".glass-capacity--js";
 const SETTINGS_GOAL_SELECTOR = ".select-goal--js";
 
+const GLASS_CAPACITY_STORAGE_KEY = "glassCapacity";
+const GOAL_STORAGE_KEY = "goal";
+
 const infoGoal = document.querySelector(INFO_GOAL_SELECTOR);
 const goalAchieved = document.querySelector(GOAL_ACHIEVED_SELECTOR);
 const removeGlassButton = document.querySelector(REMOVE_GLASS_BUTTON_SELECTOR);
@@ -31,13 +34,11 @@ const glassCapacitySelect = document.querySelector(
 const goalSelect = document.querySelector(SETTINGS_GOAL_SELECTOR);
 
 const storageKey = new Date().toISOString().slice(0, 10);
-const glassCapacityStorageKey = "glassCapacity";
-const goalStorageKey = "goal";
 
 const readDataFromStorage = () => {
-  let goal = parseFloat(localStorage.getItem(goalStorageKey)) || 1.5; // in litres
+  let goal = parseFloat(localStorage.getItem(GOAL_STORAGE_KEY)) || 1.5; // in litres
   let glassCapacity =
-    parseFloat(localStorage.getItem(glassCapacityStorageKey)) || 0.25; // in litres
+    parseFloat(localStorage.getItem(GLASS_CAPACITY_STORAGE_KEY)) || 0.25; // in litres
   let goalInGlasses = parseFloat(goal / glassCapacity);
   let numberOfGlasses = parseInt(localStorage.getItem(storageKey), 10) || 0;
 
@@ -197,7 +198,7 @@ const updateGlassCapacityInfo = () => {
 const handleChangeGlassCapacity = () => {
   const selectedValue =
     glassCapacitySelect.options[glassCapacitySelect.selectedIndex].value;
-  localStorage.setItem(glassCapacityStorageKey, selectedValue);
+  localStorage.setItem(GLASS_CAPACITY_STORAGE_KEY, selectedValue);
 
   [goal, glassCapacity, goalInGlasses, numberOfGlasses] = readDataFromStorage();
 
@@ -207,7 +208,7 @@ const handleChangeGlassCapacity = () => {
 
 const handleChangeGoal = () => {
   const selectedValue = goalSelect.options[goalSelect.selectedIndex].value;
-  localStorage.setItem(goalStorageKey, selectedValue);
+  localStorage.setItem(GOAL_STORAGE_KEY, selectedValue);
 
   [goal, glassCapacity, goalInGlasses, numberOfGlasses] = readDataFromStorage();
 
