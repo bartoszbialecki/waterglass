@@ -1,6 +1,11 @@
 import "../scss/main.scss";
 
 import { registerSW } from "./pwa.js";
+import {
+  fillHistoryTable,
+  insertGlassInfoToTable,
+  updateGlassInfoInTable,
+} from "./history";
 
 registerSW();
 
@@ -34,23 +39,34 @@ const glassCapacitySelect = document.querySelector(
 );
 const goalSelect = document.querySelector(SETTINGS_GOAL_SELECTOR);
 
-const currentDate = new Date().toISOString().slice(0, 10);
+const getCurrentDate = () => {
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, "0");
+  const month = String(today.getMonth() + 1).padStart(2, "0");
+  const year = today.getFullYear();
+
+  return `${year}-${month}=${day}`;
+};
+
+const currentDate = getCurrentDate();
 
 const findIndexOfPresentGlassesInDB = () => {
   return db.findIndex((item) => item.date === currentDate);
 };
 
 const readDataFromStorage = () => {
-  let db = JSON.parse(localStorage.getItem(DB_STORAGE_KEY)) || [];
   let goal = parseFloat(localStorage.getItem(GOAL_STORAGE_KEY)) || 1.5; // in litres
   let glassCapacity =
     parseFloat(localStorage.getItem(GLASS_CAPACITY_STORAGE_KEY)) || 0.25; // in litres
   let goalInGlasses = parseFloat(goal / glassCapacity);
 
-  return [db, goal, glassCapacity, goalInGlasses];
+  return [goal, glassCapacity, goalInGlasses];
 };
 
-let [db, goal, glassCapacity, goalInGlasses] = readDataFromStorage();
+let db = JSON.parse(localStorage.getItem(DB_STORAGE_KEY)) || [];
+db.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+let [goal, glassCapacity, goalInGlasses] = readDataFromStorage();
 
 let numberOfGlasses = 0;
 
@@ -181,12 +197,15 @@ const updateSotrage = () => {
   const index = findIndexOfPresentGlassesInDB();
 
   if (index === -1) {
-    db.push({
+    db.unshift({
       date: currentDate,
       glasses: numberOfGlasses,
     });
+
+    insertGlassInfoToTable(currentDate, numberOfGlasses);
   } else {
     db[index].glasses = numberOfGlasses;
+    updateGlassInfoInTable(currentDate, numberOfGlasses);
   }
 
   localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(db));
@@ -245,3 +264,5 @@ addGlassButton.addEventListener("click", handleAddGlass);
 
 glassCapacitySelect.addEventListener("change", handleChangeGlassCapacity);
 goalSelect.addEventListener("change", handleChangeGoal);
+
+fillHistoryTable(db);

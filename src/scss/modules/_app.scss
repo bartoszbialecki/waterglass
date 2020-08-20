@@ -10,6 +10,7 @@
     border: none;
     cursor: pointer;
     fill: $primaryColor;
+    margin-left: 10px;
 
     &:focus {
       outline: 2px dashed $secondaryColor;
