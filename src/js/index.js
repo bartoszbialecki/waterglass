@@ -194,7 +194,7 @@ const updateGlassCounter = () => {
   glassWater.classList.add(GLASS_WATER_ANIMATION_CLASS);
 };
 
-const updateSotrage = () => {
+const updateDb = () => {
   const index = findIndexOfPresentGlassesInDB();
 
   if (index === -1) {
@@ -212,18 +212,22 @@ const updateSotrage = () => {
   localStorage.setItem(DB_STORAGE_KEY, JSON.stringify(db));
 };
 
+const handleGlasesChange = () => {
+  updateGlassCounter();
+  updateDb();
+  drawHistoryGraph(db);
+};
+
 const handleRemoveGlass = () => {
   if (numberOfGlasses > 0) {
     numberOfGlasses--;
-    updateGlassCounter();
-    updateSotrage();
+    handleGlasesChange();
   }
 };
 
 const handleAddGlass = () => {
   numberOfGlasses++;
-  updateGlassCounter();
-  updateSotrage();
+  handleGlasesChange();
 };
 
 const updateInfoGoal = () => {
