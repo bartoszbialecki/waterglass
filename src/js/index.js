@@ -5,6 +5,7 @@ import {
   fillHistoryTable,
   insertGlassInfoToTable,
   updateGlassInfoInTable,
+  drawHistoryGraph,
 } from "./history";
 
 registerSW();
@@ -45,7 +46,7 @@ const getCurrentDate = () => {
   const month = String(today.getMonth() + 1).padStart(2, "0");
   const year = today.getFullYear();
 
-  return `${year}-${month}=${day}`;
+  return `${year}-${month}-${day}`;
 };
 
 const currentDate = getCurrentDate();
@@ -266,3 +267,4 @@ glassCapacitySelect.addEventListener("change", handleChangeGlassCapacity);
 goalSelect.addEventListener("change", handleChangeGoal);
 
 fillHistoryTable(db);
+drawHistoryGraph(db);

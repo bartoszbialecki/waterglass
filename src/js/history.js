@@ -1,8 +1,9 @@
 import { openDialog } from "./dialog";
+import * as d3 from "d3";
 
 const OPEN_HISTORY_BUTTON_SELECTOR = ".history-button--js";
 const HISTORY_DIALOG_SELECTOR = "#history";
-const HISTORY_TABLE_SELECTOR = ".history-table--js";
+const HISTORY_TABLE_SELECTOR = ".history__table--js";
 
 const openHistoryButton = document.querySelector(OPEN_HISTORY_BUTTON_SELECTOR);
 const historyDialog = document.querySelector(HISTORY_DIALOG_SELECTOR);
@@ -36,4 +37,69 @@ export const updateGlassInfoInTable = (date, numberOfGlasses) => {
 
 export const fillHistoryTable = (db) => {
   db.forEach((item) => insertGlassInfoToTable(item.date, item.glasses));
+};
+
+export const drawHistoryGraph = (db) => {
+  const margin = 70;
+  const width = 1000;
+  const height = 400;
+
+  const data = db.map((item) => {
+    item.date = new Date(item.date).toLocaleDateString();
+
+    return item;
+  });
+
+  const svg = d3
+    .select(".history__graph--js")
+    .style("width", "100%")
+    .attr("viewBox", `0 0 ${width + margin} ${height}`);
+
+  const chart = svg.append("g").attr("transform", `translate(${margin}, 0)`);
+
+  const yScale = d3
+    .scaleLinear()
+    .range([height - 2 * margin, 0])
+    .domain([0, 25]);
+
+  chart.append("g").style("font-size", "18px").call(d3.axisLeft(yScale));
+
+  chart
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("fill", "#334e63")
+    .style("font-size", "16px")
+    .attr("x", -210)
+    .attr("y", -50)
+    .text("Number of glasses");
+
+  const xScale = d3
+    .scaleBand()
+    .range([0, width])
+    .domain(
+      data.map((item) => {
+        return item.date;
+      })
+    )
+    .padding(0.2);
+
+  chart
+    .append("g")
+    .attr("transform", `translate(0, ${height - 2 * margin})`)
+    .call(d3.axisBottom(xScale))
+    .selectAll("text")
+    .attr("transform", "translate(0, 10) rotate(-45)")
+    .style("text-anchor", "end")
+    .style("font-size", 18);
+
+  chart
+    .selectAll()
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("fill", "#334e63")
+    .attr("x", (s) => xScale(s.date))
+    .attr("y", (s) => yScale(s.glasses))
+    .attr("height", (s) => height - 2 * margin - yScale(s.glasses))
+    .attr("width", xScale.bandwidth());
 };
