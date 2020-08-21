@@ -17,7 +17,7 @@ export const insertGlassInfoToTable = (date, numberOfGlasses) => {
   const row = historyTableBody.insertRow(0);
   const dateCell = row.insertCell(0);
   const glassesCell = row.insertCell(1);
-  dateCell.innerHTML = date;
+  dateCell.innerHTML = new Date(date).toLocaleDateString();
   glassesCell.innerHTML = numberOfGlasses;
 };
 
