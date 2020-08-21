@@ -28,7 +28,7 @@ export const updateGlassInfoInTable = (date, numberOfGlasses) => {
   for (let i = 0; i < count; i++) {
     const row = historyTableBody.rows[i];
 
-    if (row.cells[0].textContent === date) {
+    if (row.cells[0].textContent === new Date(date).toLocaleDateString()) {
       row.cells[1].textContent = numberOfGlasses;
       break;
     }
@@ -45,9 +45,10 @@ export const drawHistoryGraph = (db) => {
   const height = 400;
 
   const data = db.map((item) => {
-    item.date = new Date(item.date).toLocaleDateString();
-
-    return item;
+    return {
+      ...item,
+      date: new Date(item.date).toLocaleDateString(),
+    };
   });
 
   const svg = d3
