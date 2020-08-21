@@ -113,7 +113,15 @@ export const drawHistoryGraph = (db) => {
     .append("rect")
     .attr("fill", "#334e63")
     .attr("x", (s) => xScale(s.date))
+    .attr("y", (s) => yScale(0))
+    .attr("height", (s) => height - 2 * margin - yScale(0))
+    .attr("width", xScale.bandwidth());
+
+  chart
+    .selectAll("rect")
+    .transition()
+    .duration(800)
     .attr("y", (s) => yScale(s.glasses))
     .attr("height", (s) => height - 2 * margin - yScale(s.glasses))
-    .attr("width", xScale.bandwidth());
+    .delay((s, i) => i * 100);
 };
