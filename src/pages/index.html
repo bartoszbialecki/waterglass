@@ -345,13 +345,23 @@
 
           <form class="settings-form" action="">
             <p>
-              <label>Set your goal (in litres):</label>
-              <select class="settings-form__goal select-goal--js"></select>
+              <label for="goal">Set your goal (in litres):</label>
+              <select
+                class="settings-form__goal select-goal--js"
+                id="goal"
+                name="goal"
+              ></select>
             </p>
 
             <p>
-              <label>Glass capacity (in millilitres):</label>
-              <select class="settings-form__glass glass-capacity--js">
+              <label for="glass-capacity"
+                >Glass capacity (in millilitres):</label
+              >
+              <select
+                class="settings-form__glass glass-capacity--js"
+                id="glass-capacity"
+                name="glass-capacity"
+              >
                 <option value="0.2">200 ml</option>
                 <option value="0.24">240 ml</option>
                 <option value="0.25">250 ml</option>
