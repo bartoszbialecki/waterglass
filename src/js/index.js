@@ -66,7 +66,7 @@ const readDataFromStorage = () => {
 
 let db = JSON.parse(localStorage.getItem(DB_STORAGE_KEY)) || [];
 db.sort((a, b) => new Date(a.date) - new Date(b.date));
-console.log(db);
+
 let [goal, glassCapacity, goalInGlasses] = readDataFromStorage();
 
 let numberOfGlasses = 0;
