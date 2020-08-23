@@ -60,7 +60,7 @@ const readDataFromStorage = () => {
   let glassCapacity =
     parseFloat(localStorage.getItem(GLASS_CAPACITY_STORAGE_KEY)) || 0.25; // in litres
   let goalInGlasses = parseFloat(goal / glassCapacity);
-
+  console.log(goal, glassCapacity, goalInGlasses);
   return [goal, glassCapacity, goalInGlasses];
 };
 
@@ -243,7 +243,7 @@ const handleChangeGlassCapacity = () => {
     glassCapacitySelect.options[glassCapacitySelect.selectedIndex].value;
   localStorage.setItem(GLASS_CAPACITY_STORAGE_KEY, selectedValue);
 
-  [goal, glassCapacity, goalInGlasses, numberOfGlasses] = readDataFromStorage();
+  [goal, glassCapacity, goalInGlasses] = readDataFromStorage();
 
   updateGlassCapacityInfo();
   updateInfoGoal();
@@ -253,7 +253,7 @@ const handleChangeGoal = () => {
   const selectedValue = goalSelect.options[goalSelect.selectedIndex].value;
   localStorage.setItem(GOAL_STORAGE_KEY, selectedValue);
 
-  [goal, glassCapacity, goalInGlasses, numberOfGlasses] = readDataFromStorage();
+  [goal, glassCapacity, goalInGlasses] = readDataFromStorage();
 
   updateInfoGoal();
   goalAchieved.classList.remove(GOAL_ACHIEVED_ANIMATION_CLASS);
